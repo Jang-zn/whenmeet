@@ -1,64 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:whenmeet/service/auth_service.dart';
+import 'package:whenmeet/view/login_page.dart';
+import 'package:whenmeet/view/sign_up_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// 1
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _authService = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    _authService.showLogin();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      title: 'Photo Gallery App',
+      theme: ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity),
+      // 2
+      home: StreamBuilder<AuthState>(
+        // 2
+          stream: _authService.authStateController.stream,
+          builder: (context, snapshot) {
+            // 3
+            if (snapshot.hasData) {
+              return Navigator(
+                pages: [
+                  // 4
+                  // Show Login Page
+                  if (snapshot.data?.authFlowStatus == AuthFlowStatus.login)
+                    MaterialPage(child: LoginPage(
+                        shouldShowSignUp: _authService.showSignUp
+                    )),
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+                  // 5
+                  // Show Sign Up Page
+                  if (snapshot.data?.authFlowStatus == AuthFlowStatus.signUp)
+                    MaterialPage(child: SignUpPage())
+                ],
+                onPopPage: (route, result) => route.didPop(result),
+              );
+            } else {
+              // 6
+              return Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              );
+            }
+          }),
+      );
   }
 }
