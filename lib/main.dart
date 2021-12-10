@@ -4,6 +4,9 @@ import 'package:whenmeet/service/camera_flow.dart';
 import 'package:whenmeet/view/login_page.dart';
 import 'package:whenmeet/view/sign_up_page.dart';
 import 'package:whenmeet/view/verification_page.dart';
+import 'package:whenmeet/amplifyconfiguration.dart';
+import 'package:amplify_core/amplify_core.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -16,12 +19,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  final _amplify = Amplify();
   final _authService = AuthService();
 
   @override
   void initState() {
     super.initState();
     _authService.showLogin();
+    _configureAmplify();
   }
 
   @override
@@ -70,5 +76,14 @@ class _MyAppState extends State<MyApp> {
             }
           }),
       );
+  }
+
+  void _configureAmplify() async {
+    try {
+      await _amplify.configure(amplifyconfig);
+      print('Successfully configured Amplify 🎉');
+    } catch (e) {
+      print('Could not configure Amplify ☠️');
+    }
   }
 }

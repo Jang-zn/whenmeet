@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-whenmeet-dev-162412-authRole",
+      "UnauthRoleArn": "arn:aws:iam::948587340560:role/amplify-whenmeet-dev-162412-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::948587340560:role/amplify-whenmeet-dev-162412-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-whenmeet-dev-162412-deployment",
+      "UnauthRoleName": "amplify-whenmeet-dev-162412-unauthRole",
+      "StackName": "amplify-whenmeet-dev-162412",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:948587340560:stack/amplify-whenmeet-dev-162412/2e8f60b0-598a-11ec-9956-0a3e1fa0944d",
+      "AmplifyAppId": "d8wvfo1fj43mp"
+    }
+  }
+}
