@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:whenmeet/service/auth_credentials.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback? shouldShowSignUp;
-  LoginPage({Key? key, this.shouldShowSignUp}) : super(key: key);
+
+  final ValueChanged<LoginCredentials> didProvideCredentials;
+
+  LoginPage({Key? key, this.shouldShowSignUp, required this.didProvideCredentials}) : super(key: key);
+
+
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
@@ -71,7 +77,9 @@ class _LoginPageState extends State<LoginPage> {
   void _login() {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
-
+    final credentials =
+    LoginCredentials(username: username, password: password);
+    widget.didProvideCredentials(credentials);
     print('username: $username');
     print('password: $password');
   }

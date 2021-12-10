@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whenmeet/service/auth_service.dart';
 import 'package:whenmeet/view/login_page.dart';
 import 'package:whenmeet/view/sign_up_page.dart';
+import 'package:whenmeet/view/verification_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,13 +41,20 @@ class _MyAppState extends State<MyApp> {
                   // Show Login Page
                   if (snapshot.data?.authFlowStatus == AuthFlowStatus.login)
                     MaterialPage(child: LoginPage(
+                        didProvideCredentials: _authService.loginWithCredentials,
                         shouldShowSignUp: _authService.showSignUp
                     )),
 
                   // 5
                   // Show Sign Up Page
                   if (snapshot.data?.authFlowStatus == AuthFlowStatus.signUp)
-                    MaterialPage(child: SignUpPage())
+                    MaterialPage(child: SignUpPage(
+                        didProvideCredentials: _authService.signUpWithCredentials,
+                        shouldShowLogin: _authService.showLogin
+                    )),
+                  if (snapshot.data?.authFlowStatus == AuthFlowStatus.verification)
+                    MaterialPage(child: VerificationPage(
+                        didProvideVerificationCode: _authService.verifyCode))
                 ],
                 onPopPage: (route, result) => route.didPop(result),
               );

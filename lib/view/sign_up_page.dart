@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:whenmeet/service/auth_credentials.dart';
 
 class SignUpPage extends StatefulWidget {
+  final VoidCallback? shouldShowLogin;
+  final ValueChanged<SignUpCredentials> didProvideCredentials;
+  SignUpPage({Key? key, this.shouldShowLogin, required this.didProvideCredentials}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _SignUpPageState();
 }
@@ -22,8 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
             // Login Button
             Container(
               alignment: Alignment.bottomCenter,
-              child: FlatButton(
-                  onPressed: () {},
+              child: TextButton(
+                  onPressed: widget.shouldShowLogin,
                   child: Text('Already have an account? Login.')),
             )
           ])),
@@ -58,10 +63,10 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
 
         // Sign Up Button
-        FlatButton(
+        TextButton(
             onPressed: _signUp,
             child: Text('Sign Up'),
-            color: Theme.of(context).accentColor)
+            style:ButtonStyle(backgroundColor: MaterialStateProperty.resolveWith((states) => Colors.lightBlueAccent)))
       ],
     );
   }
@@ -74,5 +79,12 @@ class _SignUpPageState extends State<SignUpPage> {
     print('username: $username');
     print('email: $email');
     print('password: $password');
+
+    final credentials = SignUpCredentials(
+        username: username,
+        email: email,
+        password: password
+    );
+    widget.didProvideCredentials(credentials);
   }
 }
