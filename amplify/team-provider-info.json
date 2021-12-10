@@ -10,6 +10,11 @@
       "StackName": "amplify-whenmeet-dev-162412",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:948587340560:stack/amplify-whenmeet-dev-162412/2e8f60b0-598a-11ec-9956-0a3e1fa0944d",
       "AmplifyAppId": "d8wvfo1fj43mp"
+    },
+    "categories": {
+      "auth": {
+        "whenmeeta1196a95": {}
+      }
     }
   }
 }
