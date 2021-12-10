@@ -24,5 +24,11 @@
         ]
       }
     }
+  },
+  "analytics": {
+    "whenmeet": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

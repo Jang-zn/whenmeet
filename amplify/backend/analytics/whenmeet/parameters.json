@@ -1,0 +1,21 @@
+{
+    "appName": "whenmeet",
+    "roleName": "pinpointLambdaRole3979e410",
+    "cloudformationPolicyName": "cloudformationPolicy3979e410",
+    "cloudWatchPolicyName": "cloudWatchPolicy3979e410",
+    "pinpointPolicyName": "pinpointPolicy3979e410",
+    "authPolicyName": "pinpoint_amplify_3979e410",
+    "unauthPolicyName": "pinpoint_amplify_3979e410",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
