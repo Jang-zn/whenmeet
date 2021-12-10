@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whenmeet/service/auth_service.dart';
+import 'package:whenmeet/service/camera_flow.dart';
 import 'package:whenmeet/view/login_page.dart';
 import 'package:whenmeet/view/sign_up_page.dart';
 import 'package:whenmeet/view/verification_page.dart';
@@ -44,7 +45,6 @@ class _MyAppState extends State<MyApp> {
                         didProvideCredentials: _authService.loginWithCredentials,
                         shouldShowSignUp: _authService.showSignUp
                     )),
-
                   // 5
                   // Show Sign Up Page
                   if (snapshot.data?.authFlowStatus == AuthFlowStatus.signUp)
@@ -54,7 +54,10 @@ class _MyAppState extends State<MyApp> {
                     )),
                   if (snapshot.data?.authFlowStatus == AuthFlowStatus.verification)
                     MaterialPage(child: VerificationPage(
-                        didProvideVerificationCode: _authService.verifyCode))
+                        didProvideVerificationCode: _authService.verifyCode)),
+                  if (snapshot.data?.authFlowStatus == AuthFlowStatus.session)
+                    MaterialPage(
+                        child: CameraFlow(shouldLogOut: _authService.logOut))
                 ],
                 onPopPage: (route, result) => route.didPop(result),
               );
